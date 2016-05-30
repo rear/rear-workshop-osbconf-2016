@@ -10,7 +10,12 @@ client*)
 echo "Running client only commands:"
 echo "Installing bareos-filedaemon"
 yum install -y bareos-filedaemon bareos-console
+# installing bareos specific config files
 
+echo "Enabling and Starting bareos-fd daemon process"
+systemctl enable bareos-fd.service
+systemctl start bareos-fd.service
+`
 ;;
 # end of client specific code
 
@@ -39,23 +44,34 @@ yum install -y  postgresql-server
 systemctl enable postgresql.service
 systemctl start postgresql.service
 
-# install bareos
+# install bareos RPMs
 echo "Installing bareos server components"
 yum install -y  bareos bareos-database-postgresql
+
+# installing bareos specific configuration files
 
 # before doing the initialization of bareos tables make /etc/bareos readable for postgres user
 chmod 755 /etc/bareos
 chmod 644 /etc/bareos/*.conf
 
 # configure bareos
+echo "Configuring bareos Postgres tables"
 su postgres -c /usr/lib/bareos/scripts/create_bareos_database
 su postgres -c /usr/lib/bareos/scripts/make_bareos_tables
 su postgres -c /usr/lib/bareos/scripts/grant_bareos_privileges
 
 # start the bareos daemons
-service bareos-dir start
-service bareos-sd start
-service bareos-fd start
+echo "Enabling and starting the Bareos daemons"
+systemctl enable bareos-dir.service
+systemctl enable bareos-sd.service
+systemctl enable bareos-fd.service
+systemctl start bareos-dir.service
+systemctl start bareos-sd.service
+systemctl start bareos-fd.service
+
+#service bareos-dir start
+#service bareos-sd start
+#service bareos-fd start
 
 ;;
 # end of server specfic code
