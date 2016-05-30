@@ -17,6 +17,7 @@ if [[ $? -eq 1 ]] ;then
    echo "Add IP addresses of client and server to /etc/hosts file"
    echo "192.168.33.10   client.box client vagrant-client" >> /etc/hosts
    echo "192.168.33.15   server.box server vagrant-server" >> /etc/hosts
+   echo "192.168.33.1    host vagrant-host" >> /etc/hosts
 fi
 
 
@@ -48,7 +49,7 @@ wget -O /etc/yum.repos.d/bareos.repo http://download.bareos.org/bareos/release/l
 wget -O /etc/yum.repos.d/Archiving:Backup:Rear.repo http://download.opensuse.org/repositories/Archiving:/Backup:/Rear/CentOS_7/Archiving:Backup:Rear.repo
 
 # Download RPMs for workshop
-packages=( syslinux syslinux-extlinux cifs-utils genisoimage epel-release net-tools
+packages=( syslinux syslinux-extlinux cifs-utils genisoimage epel-release net-tools xinetd tftp-server dhcp samba samba-client
            bind-utils rear postgresql-server bareos bareos-database-postgresql mtools attr libusal )
 for pkg in ${packages[@]}
 do
@@ -158,3 +159,4 @@ sed -i -e 's,^#Domain =.*,Domain = box,' /etc/idmapd.conf
 mv /etc/yum.repos.d/*.repo /etc/disto.repos.d/
 mv /etc/disto.repos.d/workshop.repo /etc/yum.repos.d/
 echo "Moved all repos from /etc/yum.repos.d/ to /etc/disto.repos.d/ except the workshop.repo"
+
