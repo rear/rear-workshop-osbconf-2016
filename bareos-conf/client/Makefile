@@ -1,5 +1,5 @@
 
-name=bareos-server-conf
+name=bareos-client-conf
 specfile=$(name).spec
 version := $(shell awk 'BEGIN { FS=":" } /^Version:/ { print $$2}' $(specfile) | awk '{print $$1}' )
 
@@ -14,7 +14,6 @@ $(name).tar.gz:
 	--transform='s,^\.,$(name)-$(version),S' .
 
 rpm: $(specfile)
-	@echo "Building RPM package"
 	rpmbuild -v -tb --clean \
 		../$(name).tar.gz
 
