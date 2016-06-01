@@ -17,7 +17,7 @@ if [[ $? -eq 1 ]] ;then
    echo "Add IP addresses of client and server to /etc/hosts file"
    echo "192.168.33.10   client.box client vagrant-client" >> /etc/hosts
    echo "192.168.33.15   server.box server vagrant-server" >> /etc/hosts
-   echo "192.168.33.1    host vagrant-host" >> /etc/hosts
+   echo "192.168.33.1    vagrant-host" >> /etc/hosts
 fi
 
 
@@ -47,10 +47,13 @@ done
 # Define bareos and rear repo defintions
 wget -O /etc/yum.repos.d/bareos.repo http://download.bareos.org/bareos/release/latest/CentOS_7/bareos.repo
 wget -O /etc/yum.repos.d/Archiving:Backup:Rear.repo http://download.opensuse.org/repositories/Archiving:/Backup:/Rear/CentOS_7/Archiving:Backup:Rear.repo
+wget -O /etc/yum.repos.d/home:gdha.repo http://download.opensuse.org/repositories/home:/gdha/CentOS_7/home:gdha.repo
 
 # Download RPMs for workshop
 packages=( syslinux syslinux-extlinux cifs-utils genisoimage epel-release net-tools xinetd tftp-server dhcp samba samba-client
-           bind-utils rear postgresql-server bareos bareos-database-postgresql mtools attr libusal )
+           bind-utils rear postgresql-server bareos bareos-database-postgresql mtools attr libusal bareos-client-conf
+	   bareos-server-conf )
+
 for pkg in ${packages[@]}
 do
     echo "Download package $pkg into $RPMDIR"

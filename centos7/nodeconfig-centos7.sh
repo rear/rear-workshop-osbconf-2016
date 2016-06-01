@@ -8,16 +8,16 @@ case $(hostname) in
 client*)
 #######
 echo "Running client only commands:"
-echo "Installing bareos-filedaemon"
+echo "Installing bareos-filedaemon and bconsole"
 yum install -y bareos-filedaemon bareos-console
 # installing bareos specific config files
-
+yum install -y bareos-client-conf
 echo "Enabling and Starting bareos-fd daemon process"
 systemctl enable bareos-fd.service
 systemctl start bareos-fd.service
-`
 ;;
 # end of client specific code
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 server*) 
 #######
@@ -49,6 +49,7 @@ echo "Installing bareos server components"
 yum install -y  bareos bareos-database-postgresql
 
 # installing bareos specific configuration files
+yum install -y bareos-server-conf
 
 # before doing the initialization of bareos tables make /etc/bareos readable for postgres user
 chmod 755 /etc/bareos
