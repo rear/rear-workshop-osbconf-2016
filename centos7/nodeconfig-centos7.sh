@@ -9,7 +9,7 @@ client*)
 #######
 echo "Running client only commands:"
 echo "Installing bareos-filedaemon and bconsole"
-yum install -y bareos-filedaemon bareos-console
+yum install -y bareos-filedaemon bareos-bconsole
 
 # installing bareos specific config files
 #yum install -y bareos-client-conf # fails see issue #1
