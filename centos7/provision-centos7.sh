@@ -156,6 +156,7 @@ chcon -R -t httpd_sys_content_t /srv/http/packages/
 # Restart httpd so it knows about $RPMDIR location (/etc/httpd/conf.d/packages.conf)
 #service httpd restart
 /bin/systemctl restart  httpd.service
+/bin/systemctl enable   httpd.service
 
 # add the domain name to the /etc/idmapd.conf file (for NFSv4)
 sed -i -e 's,^#Domain =.*,Domain = box,' /etc/idmapd.conf
