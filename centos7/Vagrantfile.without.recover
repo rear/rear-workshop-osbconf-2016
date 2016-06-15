@@ -33,25 +33,6 @@ Vagrant.configure(2) do |config|
   # end of nodes.each do |node|
   end
 
-  config.vm.define "recover", autostart: false do |recover|
-    recover.vm.network :private_network, ip: "192.168.33.5"
-    # recover.ssh.username = "root"
-
-    recover.vm.provider :libvirt do |recover_prov|
-      recover_prov.graphics_port = 5999
-      recover_prov.graphics_ip = '0.0.0.0'
-      recover_prov.video_type = 'qxl'
-      recover_prov.storage :file, :size => '40G', :type => 'raw'
-      # make sure file "/exports/isos/client/rear-client.iso" is readable by others
-      recover_prov.storage :file, :device => :cdrom, :path => '/exports/isos/client/rear-client.iso'
-      recover_prov.boot 'cdrom'
-      recover_prov.boot 'hd'
-      recover_prov.boot 'network'
-      # end of |recover_prov|
-      end
-
-    # end of |recover| 
-    end
   
 # end of Vagrant.configure
 end
