@@ -80,6 +80,7 @@ gpgcheck=0
 EOF
 fi
 
+echo "Adding user vagrant and some security related stuff"
 # Users, groups, passwords and sudoers.
 echo 'vagrant' | passwd --stdin root
 grep 'vagrant' /etc/passwd > /dev/null
@@ -101,22 +102,19 @@ sed -i 's/Defaults\s*requiretty/Defaults !requiretty/' /etc/sudoers
 sed -i 's/.*UseDNS.*/UseDNS no/' /etc/ssh/sshd_config
 
 # setup SSH keys for user root
-[ -d ~root/.ssh ] || mkdir ~root/.ssh
-chmod 700 ~root/.ssh
+[ -d ~root/.ssh ] || mkdir  -m 700 ~root/.ssh
 cat >> ~root/.ssh/authorized_keys << EOF
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCqZRGc6zbCXQVL7L3o6ze9ESvBN1Skm7PhNExXKfsxAmCfaBYFCwcLljXk+ITapUpFmRoeaI74d4qpTsl0eX9I+b7UcjJjhuiX3S2HoWxB+/JyiJoO5SnxkxkUQcMqImDdM9NvCH5IcfcT7sZ+8uOATimSigOAWk0cRrgToGFARutN60F+P9CHHMCaFE/9tYrh/CtfvMZaEcDnmGgbbvFOED+wgdyTg/35iSZMM9YkglF07xxOzvUm7awny/UssuZYOPrGnHylqrup4uOx4fz61Y1Kl0/E9MAxYOC/sRqVkob0sGHaJ0KPavVmIvVwEgBOGHBH2F8g8iAL/Ma1+irl insecure public
- key of vagrant
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key
 EOF
 chmod 600 ~root/.ssh/authorized_keys
-# TODO: use ssh-keygen to generate a new pair of SSH keys for root to exchange between client/server systems?
-
+# use ssh-keygen to generate a new pair of SSH keys for root to exchange between client/server systems?
+echo "Generate a new keypair for root"
+sh-keygen -t rsa -P '' -f ~root/.ssh/id_rsa
 
 # setup SSH insecure key for user vagrant
-[ -d ~vagrant/.ssh ] || mkdir ~vagrant/.ssh
-chmod 700 ~vagrant/.ssh
+[ -d ~vagrant/.ssh ] || mkdir -m 700 ~vagrant/.ssh
 cat >> ~vagrant/.ssh/authorized_keys << EOF
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCqZRGc6zbCXQVL7L3o6ze9ESvBN1Skm7PhNExXKfsxAmCfaBYFCwcLljXk+ITapUpFmRoeaI74d4qpTsl0eX9I+b7UcjJjhuiX3S2HoWxB+/JyiJoO5SnxkxkUQcMqImDdM9NvCH5IcfcT7sZ+8uOATimSigOAWk0cRrgToGFARutN60F+P9CHHMCaFE/9tYrh/CtfvMZaEcDnmGgbbvFOED+wgdyTg/35iSZMM9YkglF07xxOzvUm7awny/UssuZYOPrGnHylqrup4uOx4fz61Y1Kl0/E9MAxYOC/sRqVkob0sGHaJ0KPavVmIvVwEgBOGHBH2F8g8iAL/Ma1+irl insecure public
- key of vagrant
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key
 EOF
 chmod 600 ~vagrant/.ssh/authorized_keys
 
