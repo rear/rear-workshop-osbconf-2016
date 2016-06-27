@@ -109,7 +109,7 @@ EOF
 chmod 600 ~root/.ssh/authorized_keys
 # use ssh-keygen to generate a new pair of SSH keys for root to exchange between client/server systems?
 echo "Generate a new keypair for root"
-sh-keygen -t rsa -P '' -f ~root/.ssh/id_rsa
+ssh-keygen -t rsa -P '' -f ~root/.ssh/id_rsa
 
 # setup SSH insecure key for user vagrant
 [ -d ~vagrant/.ssh ] || mkdir -m 700 ~vagrant/.ssh
