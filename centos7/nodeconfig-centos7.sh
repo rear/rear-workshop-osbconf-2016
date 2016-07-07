@@ -25,7 +25,10 @@ systemctl start bareos-fd.service
 server*) 
 #######
 echo "Running server only commands:"
+# /export/nfs is used to store NFS backups
 [[ ! -d /export/nfs ]] && mkdir -m 755 -p /export/nfs
+# /export/archives is used to store sshfs or rsync backups
+[[ ! -d /export/archives ]] && mkdir -m 755 -p /export/archives
 
 cat > /etc/exports <<EOF
 /export/nfs 192.168.0.0/16(rw,no_root_squash)
