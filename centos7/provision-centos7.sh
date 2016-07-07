@@ -159,9 +159,9 @@ chcon -R -t httpd_sys_content_t /srv/http/packages/
 # add the domain name to the /etc/idmapd.conf file (for NFSv4)
 sed -i -e 's,^#Domain =.*,Domain = box,' /etc/idmapd.conf
 
-# move most repos to /etc/disto.repos.d (F25 proposed scheme) to avoid internet traffic during workshop
-[[ ! -d /etc/disto.repos.d ]] && mkdir -m 755 -p /etc/disto.repos.d
-mv /etc/yum.repos.d/*.repo /etc/disto.repos.d/
-mv /etc/disto.repos.d/workshop.repo /etc/yum.repos.d/
-echo "Moved all repos from /etc/yum.repos.d/ to /etc/disto.repos.d/ except the workshop.repo"
+# move most repos to /etc/distro.repos.d (F25 proposed scheme) to avoid internet traffic during workshop
+[[ ! -d /etc/distro.repos.d ]] && mkdir -m 755 -p /etc/distro.repos.d
+mv /etc/yum.repos.d/*.repo /etc/distro.repos.d/
+mv /etc/distro.repos.d/workshop.repo /etc/yum.repos.d/
+echo "Moved all repos from /etc/yum.repos.d/ to /etc/distro.repos.d/ except the workshop.repo"
 
