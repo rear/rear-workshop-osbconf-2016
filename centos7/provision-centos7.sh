@@ -56,7 +56,7 @@ wget -O /etc/yum.repos.d/home:gdha.repo http://download.opensuse.org/repositorie
 # Download RPMs for workshop
 packages=( syslinux syslinux-extlinux cifs-utils genisoimage net-tools xinetd tftp-server dhcp samba samba-client
            bind-utils rear postgresql-server bareos bareos-database-postgresql mtools attr libusal bareos-client-conf
-	   bareos-server-conf sshfs )
+	   bareos-server-conf sshfs rear-workshop )
 
 for pkg in ${packages[@]}
 do
