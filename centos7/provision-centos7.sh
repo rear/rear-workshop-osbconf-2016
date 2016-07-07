@@ -34,7 +34,8 @@ echo "Running yum update..."
 yum update -y
 
 # httpd,createrepo,wget
-packages=( httpd createrepo wget )
+# epel-release will install Epel repository
+packages=( httpd createrepo wget epel-release )
 for pkg in ${packages[@]}
 do
     rpm -q $pkg >/dev/null
@@ -53,9 +54,9 @@ wget -O /etc/yum.repos.d/Archiving:Backup:Rear:Snapshot.repo http://download.ope
 wget -O /etc/yum.repos.d/home:gdha.repo http://download.opensuse.org/repositories/home:/gdha/CentOS_7/home:gdha.repo
 
 # Download RPMs for workshop
-packages=( syslinux syslinux-extlinux cifs-utils genisoimage epel-release net-tools xinetd tftp-server dhcp samba samba-client
+packages=( syslinux syslinux-extlinux cifs-utils genisoimage net-tools xinetd tftp-server dhcp samba samba-client
            bind-utils rear postgresql-server bareos bareos-database-postgresql mtools attr libusal bareos-client-conf
-	   bareos-server-conf )
+	   bareos-server-conf sshfs )
 
 for pkg in ${packages[@]}
 do
