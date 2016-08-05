@@ -81,6 +81,17 @@ systemctl start bareos-fd.service
 #service bareos-sd start
 #service bareos-fd start
 
+# install samba server + basic config
+yum install -y samba samba-client 
+systemctl start smb nmb 
+systemctl enable smb nmb 
+setsebool -P samba_enable_home_dirs on 
+restorecon -R /home/vagrant
+# adding user vagrant into smb passwd file with passwd vagrant
+printf "vagrant\nvagrant\n" | smbpasswd -s -a vagrant
+# access share as "mount -t cifs  //server/homes /mnt -o username=vagrant"
+# use "testparm -s" to view details of samba cinfig on system "server"
+
 ;;
 # end of server specfic code
 
