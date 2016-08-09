@@ -29,6 +29,7 @@ Rear configuration files used during the REAR workshop as lab exercises
 %{__rm} -rf %{buildroot}
 mkdir -vp %{buildroot}/etc/rear/workshop
 cp -rv *.conf %{buildroot}/etc/rear/workshop/
+cp -v .cifs   %{buildroot}/etc/rear/workshop/
 cp -v  README %{buildroot}/etc/rear/workshop/
 
 %clean
