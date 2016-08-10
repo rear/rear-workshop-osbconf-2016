@@ -86,7 +86,7 @@ and so on....you will lots of lines (also for the server vm)
 ==> server: Added user vagrant.
 </pre>
 
-=== Login to the vagrant VMs ===
+## Login to the vagrant VMs
 
 There are several possibilities to login onto these fresh created VMs:
 
@@ -104,7 +104,12 @@ Now, you are ready to attend the workshop without losing time to set it up from 
 
 ## Halting the VMs
 
-is quite simple: +vagrant halt+ (see also +vagrant -h+ for more options)
+is quite simple: *vagrant halt* (see also *vagrant -h* for more options)
+
+
+# Encountered a problem with setting up the workshop
+
+Oops, please open a new issue at https://github.com/rear/rear-workshop-osbconf-2016/issues
 
 # Known Issues
 
@@ -129,9 +134,11 @@ rsync: connection unexpectedly closed (0 bytes received so far) [sender]
 rsync error: error in rsync protocol data stream (code 12) at io.c(226) [sender=3.1.2]
 </pre>
 
-Then go check and follow the advise mentioned in issue https://github.com/mitchellh/vagrant/issues/6702 and restart as +vagrant up --provision+
+Then go check and follow the advise mentioned in issue https://github.com/mitchellh/vagrant/issues/6702 and restart as *vagrant up --provision*
 
 
 ## Author: Gratien D'haese
 
 If you need to contact me for setting a workshop on your premises then see the possibilities at http://it3.be/rear-support/index.html
+
+Be aware, this workshop uses *centos/7* as GNU/Linux Operating system. If you want to have it for another version or type of Linux then you have to pay for it (consultancy fee - see above link).
