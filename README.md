@@ -1,16 +1,16 @@
-rear-workshop-osbconf-2016
-==========================
+# rear-workshop-osbconf-2016
+
 :author: Gratien Dhaese <gratien.dhaese@gmail.com>
 
 The rear workshop for OSBconf 2016 (Open Source Backup Conference, Cologne, Germany, 26-27 September, 2016) - see http://osbconf.org/workshops/ - is guiding you into setting up rear, how to configure it, and with lots of real use cases, such as with Bareos, NFS, CIFS, RSYNC.
 
-== Setting up your virtual machines ==
+## Setting up your virtual machines
 
 This document was only tested for the KVM and VirtualBox hypervisors, but it should work fine with other hypervisors.
 
 I would really appreciate that you test your hypervisor of choice and contribute instructions back (at https://github.com/rear/rear-workshop-osbconf-2016/pulls).
 
-=== Prerequisites ===
+## Prerequisites
 
 Before we can start you need several things:
 
@@ -22,14 +22,14 @@ Before we can start you need several things:
  - Sufficient free disk space for 3 VMs (about 3G per virtual machine should do)
  - Optional, vncviewer to approach the recover VM
 
-=== Downloading the centos/7 box with vagrant ===
+## Downloading the centos/7 box with vagrant
 
 It is important to do these steps before going to the workshop so we do not waste time downloading the centos7 image. Furthermore, during the first time start up of vagrant with the centos7 vagrantfile all dependencies will be downloaded so that the _client_ and _server_ system are ready for the workshop. This takes quite some time (20 minutes or more).
 
 At this point we assume you have a hypervisor and vagrant already installed. Also, the +git+ command is avaliable.
 Start with downloading the workshop:
 
-----
+<pre>
 $ git clone https://github.com/rear/rear-workshop-osbconf-2016.git
 Cloning into 'rear-workshop-osbconf-2016'...
 remote: Counting objects: 160, done.
@@ -37,19 +37,19 @@ remote: Total 160 (delta 0), reused 0 (delta 0), pack-reused 160
 Receiving objects: 100% (160/160), 40.76 KiB | 0 bytes/s, done.
 Resolving deltas: 100% (89/89), done.
 Checking connectivity... done.
-----
+</pre>
 
 Then, browse into:
 
-----
+<pre>
 $ cd rear-workshop-osbconf-2016/centos7/
 $ ls
 nodeconfig-centos7.sh  provision-centos7.sh  Vagrantfile  Vagrantfile.libvirt.recover  Vagrantfile.virtualbox.recover
-----
+</pre>
 
 And, let do vagrant its job:
 
-----
+<pre>
 $ vagrant up
 Bringing machine 'client' up with 'virtualbox' provider...
 Bringing machine 'server' up with 'virtualbox' provider...
@@ -84,7 +84,7 @@ and so on....you will lots of lines (also for the server vm)
 ==> server: Created symlink from /etc/systemd/system/multi-user.target.wants/smb.service to /usr/lib/systemd/system/smb.service.
 ==> server: Created symlink from /etc/systemd/system/multi-user.target.wants/nmb.service to /usr/lib/systemd/system/nmb.service.
 ==> server: Added user vagrant.
-----
+</pre>
 
 === Login to the vagrant VMs ===
 
@@ -102,17 +102,17 @@ The passwords for the _vagrant_ and _root_ user are the same: *vagrant*
 
 Now, you are ready to attend the workshop without losing time to set it up from scratch.
 
-=== Halting the VMs ===
+## Halting the VMs
 
 is quite simple: +vagrant halt+ (see also +vagrant -h+ for more options)
 
-== Known Issues ==
+# Known Issues
 
-=== Windows 10 with cygwin may exit with rsync error ===
+## Windows 10 with cygwin may exit with rsync error
 
 When you get to see an error like the following:
 
-----
+<pre>
 => client: Rsyncing folder: /home/grati/rear-workshop-osbconf-2016/centos7/ => /vagrant
 There was an error when attempting to rsync a synced folder.
 Please inspect the error message below for more info.
@@ -127,11 +127,11 @@ mux_client_request_session: read from master failed: Connection reset by peer
 Failed to connect to new control master
 rsync: connection unexpectedly closed (0 bytes received so far) [sender]
 rsync error: error in rsync protocol data stream (code 12) at io.c(226) [sender=3.1.2]
-----
+</pre>
 
 Then go check and follow the advise mentioned in issue https://github.com/mitchellh/vagrant/issues/6702 and restart as +vagrant up --provision+
 
 
-== Author: Gratien D'haese ==
+## Author: Gratien D'haese
 
 If you need to contact me for setting a workshop on your premises then see the possibilities at http://it3.be/rear-support/index.html
