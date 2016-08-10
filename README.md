@@ -1,15 +1,17 @@
-# rear-workshop-osbconf-2016
+rear-workshop-osbconf-2016
+==========================
 :author: Gratien Dhaese <gratien.dhaese@gmail.com>
-:doctype: article
 
 The rear workshop for OSBconf 2016 (Open Source Backup Conference, Cologne, Germany, 26-27 September, 2016) - see http://osbconf.org/workshops/ - is guiding you into setting up rear, how to configure it, and with lots of real use cases, such as with Bareos, NFS, CIFS, RSYNC.
 
-== Setting up your virtual machines
+== Setting up your virtual machines ==
+
 This document was only tested for the KVM and VirtualBox hypervisors, but it should work fine with other hypervisors.
 
 I would really appreciate that you test your hypervisor of choice and contribute instructions back (at https://github.com/rear/rear-workshop-osbconf-2016/pulls).
 
-=== Prerequisites
+=== Prerequisites ===
+
 Before we can start you need several things:
 
  - Host system can be Linux, Mac, Windows
@@ -20,7 +22,8 @@ Before we can start you need several things:
  - Sufficient free disk space for 3 VMs (about 3G per virtual machine should do)
  - Optional, vncviewer to approach the recover VM
 
-=== Downloading the centos/7 box with vagrant
+=== Downloading the centos/7 box with vagrant ===
+
 It is important to do these steps before going to the workshop so we do not waste time downloading the centos7 image. Furthermore, during the first time start up of vagrant with the centos7 vagrantfile all dependencies will be downloaded so that the _client_ and _server_ system are ready for the workshop. This takes quite some time (20 minutes or more).
 
 At this point we assume you have a hypervisor and vagrant already installed. Also, the +git+ command is avaliable.
@@ -83,7 +86,8 @@ and so on....you will lots of lines (also for the server vm)
 ==> server: Added user vagrant.
 ----
 
-=== Login to the vagrant VMs
+=== Login to the vagrant VMs ===
+
 There are several possibilities to login onto these fresh created VMs:
 
  - vagrant ssh {client|server}
@@ -98,12 +102,14 @@ The passwords for the _vagrant_ and _root_ user are the same: *vagrant*
 
 Now, you are ready to attend the workshop without losing time to set it up from scratch.
 
-=== Halting the VMs
+=== Halting the VMs ===
+
 is quite simple: +vagrant halt+ (see also +vagrant -h+ for more options)
 
-== Known Issues
+== Known Issues ==
 
-=== Windows 10 with cygwin may exit with rsync error
+=== Windows 10 with cygwin may exit with rsync error ===
+
 When you get to see an error like the following:
 
 ----
@@ -126,5 +132,6 @@ rsync error: error in rsync protocol data stream (code 12) at io.c(226) [sender=
 Then go check and follow the advise mentioned in issue https://github.com/mitchellh/vagrant/issues/6702 and restart as +vagrant up --provision+
 
 
-== Author: Gratien D'haese
+== Author: Gratien D'haese ==
+
 If you need to contact me for setting a workshop on your premises then see the possibilities at http://it3.be/rear-support/index.html
