@@ -1,2 +1,130 @@
 # rear-workshop-osbconf-2016
-The rear workshop for OSBconf 2016
+:author: Gratien Dhaese <gratien.dhaese@gmail.com>
+:doctype: article
+
+The rear workshop for OSBconf 2016 (Open Source Backup Conference, Cologne, Germany, 26-27 September, 2016) - see http://osbconf.org/workshops/ - is guiding you into setting up rear, how to configure it, and with lots of real use cases, such as with Bareos, NFS, CIFS, RSYNC.
+
+== Setting up your virtual machines
+This document was only tested for the KVM and VirtualBox hypervisors, but it should work fine with other hypervisors.
+
+I would really appreciate that you test your hypervisor of choice and contribute instructions back (at https://github.com/rear/rear-workshop-osbconf-2016/pulls).
+
+=== Prerequisites
+Before we can start you need several things:
+
+ - Host system can be Linux, Mac, Windows
+ - A hypervisor like KVM, VirtualBox, VMware Player or VMware Fusion, Parallels Desktop
+ - Download and install *vagrant* from https://www.vagrantup.com/downloads.html
+ - KVM with libvirt needs the *vagrant-libvirt* plugin:  _vagrant plugin install vagrant-libvirt_
+ - Install *git* to download the workshop: _git clone https://github.com/rear/rear-workshop-osbconf-2016.git_
+ - Sufficient free disk space for 3 VMs (about 3G per virtual machine should do)
+ - Optional, vncviewer to approach the recover VM
+
+=== Downloading the centos/7 box with vagrant
+It is important to do these steps before going to the workshop so we do not waste time downloading the centos7 image. Furthermore, during the first time start up of vagrant with the centos7 vagrantfile all dependencies will be downloaded so that the _client_ and _server_ system are ready for the workshop. This takes quite some time (20 minutes or more).
+
+At this point we assume you have a hypervisor and vagrant already installed. Also, the +git+ command is avaliable.
+Start with downloading the workshop:
+
+----
+$ git clone https://github.com/rear/rear-workshop-osbconf-2016.git
+Cloning into 'rear-workshop-osbconf-2016'...
+remote: Counting objects: 160, done.
+remote: Total 160 (delta 0), reused 0 (delta 0), pack-reused 160
+Receiving objects: 100% (160/160), 40.76 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (89/89), done.
+Checking connectivity... done.
+----
+
+Then, browse into:
+
+----
+$ cd rear-workshop-osbconf-2016/centos7/
+$ ls
+nodeconfig-centos7.sh  provision-centos7.sh  Vagrantfile  Vagrantfile.libvirt.recover  Vagrantfile.virtualbox.recover
+----
+
+And, let do vagrant its job:
+
+----
+$ vagrant up
+Bringing machine 'client' up with 'virtualbox' provider...
+Bringing machine 'server' up with 'virtualbox' provider...
+==> client: Box 'centos/7' could not be found. Attempting to find and install...
+    client: Box Provider: virtualbox
+    client: Box Version: >= 0
+==> client: Loading metadata for box 'centos/7'
+    client: URL: https://atlas.hashicorp.com/centos/7
+==> client: Adding box 'centos/7' (v1607.01) for provider: virtualbox
+    client: Downloading: https://atlas.hashicorp.com/centos/boxes/7/versions/1607.01/providers/virtualbox.box
+    client: Progress: 1% (Rate: 606k/s, Estimated time remaining: 0:14:57)
+==> client: Successfully added box 'centos/7' (v1607.01) for 'virtualbox'!
+==> client: Importing base box 'centos/7'...
+==> client: Matching MAC address for NAT networking...
+==> client: Checking if box 'centos/7' is up to date...
+==> client: Setting the name of the VM: centos7_client_1470826828474_34068
+==> client: Clearing any previously set network interfaces...
+==> client: Preparing network interfaces based on configuration...
+    client: Adapter 1: nat
+    client: Adapter 2: hostonly
+==> client: Forwarding ports...
+    client: 22 (guest) => 2222 (host) (adapter 1)
+==> client: Booting VM...
+==> client: Waiting for machine to boot. This may take a few minutes...
+    client: SSH address: 127.0.0.1:2222
+    client: SSH username: vagrant
+    client: SSH auth method: private key
+
+and so on....you will lots of lines (also for the server vm)
+
+==> server: Complete!
+==> server: Created symlink from /etc/systemd/system/multi-user.target.wants/smb.service to /usr/lib/systemd/system/smb.service.
+==> server: Created symlink from /etc/systemd/system/multi-user.target.wants/nmb.service to /usr/lib/systemd/system/nmb.service.
+==> server: Added user vagrant.
+----
+
+=== Login to the vagrant VMs
+There are several possibilities to login onto these fresh created VMs:
+
+ - vagrant ssh {client|server}
+ - ssh vagrant@192.168.33.10  (password vagrant and this is the _client_)
+ - ssh vagrant@192.168.33.15  (password vagrant and this is the _server_)
+ - vncviewer 127.0.0.1:5991   (for the client interface)
+ - vncviewer 127.0.0.1:5992   (for the server interface)
+ - vncviewer 127.0.0.1:5993   (for the recover interface)
+ - Or, via the console of your hypervisor
+
+The passwords for the _vagrant_ and _root_ user are the same: *vagrant*
+
+Now, you are ready to attend the workshop without losing time to set it up from scratch.
+
+=== Halting the VMs
+is quite simple: +vagrant halt+ (see also +vagrant -h+ for more options)
+
+== Known Issues
+
+=== Windows 10 with cygwin may exit with rsync error
+When you get to see an error like the following:
+
+----
+=> client: Rsyncing folder: /home/grati/rear-workshop-osbconf-2016/centos7/ => /vagrant
+There was an error when attempting to rsync a synced folder.
+Please inspect the error message below for more info.
+
+Host path: /home/grati/rear-workshop-osbconf-2016/centos7/
+Guest path: /vagrant
+Command: rsync --verbose --archive --delete -z --copy-links --chmod=ugo=rwX --no-perms --no-owner --no-group --rsync-path sudo rsync -e ssh -p 2222 -o ControlMaster=auto -o ControlPath=C:/cygwin64/tmp/ssh.977 -o ControlPersist=10m -o StrictHostKeyChecking=no -o IdentitiesOnly=true -o UserKnownHostsFile=/dev/null -i 'C:/cygwin64/home/grati/rear-workshop-osbconf-2016/insecure_keys/vagrant.private' --exclude .vagrant/ /home/grati/rear-workshop-osbconf-2016/centos7/ vagrant@127.0.0.1:/vagrant
+Error: Warning: Permanently added '[127.0.0.1]:2222' (ECDSA) to the list of known hosts.
+mm_receive_fd: no message header
+process_mux_new_session: failed to receive fd 0 from slave
+mux_client_request_session: read from master failed: Connection reset by peer
+Failed to connect to new control master
+rsync: connection unexpectedly closed (0 bytes received so far) [sender]
+rsync error: error in rsync protocol data stream (code 12) at io.c(226) [sender=3.1.2]
+----
+
+Then go check and follow the advise mentioned in issue https://github.com/mitchellh/vagrant/issues/6702 and restart as +vagrant up --provision+
+
+
+== Author: Gratien D'haese
+If you need to contact me for setting a workshop on your premises then see the possibilities at http://it3.be/rear-support/index.html
