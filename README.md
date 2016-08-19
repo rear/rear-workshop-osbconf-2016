@@ -99,6 +99,7 @@ There are several possibilities to login onto these fresh created VMs:
  - Or, via the console of your hypervisor
 
 The passwords for the _vagrant_ and _root_ user are the same: *vagrant*
+
 As _vagrant_ user you can easily become _root_ via *sudo su* (the rules are pre-configured).
 
 Now, you are ready to attend the workshop without losing time to set it up from scratch.
