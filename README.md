@@ -78,7 +78,7 @@ Bringing machine 'server' up with 'virtualbox' provider...
     client: SSH username: vagrant
     client: SSH auth method: private key
 
-and so on....you will lots of lines (also for the server vm)
+and so on....you will see lots of lines flying by (also for the server vm)
 
 ==> server: Complete!
 ==> server: Created symlink from /etc/systemd/system/multi-user.target.wants/smb.service to /usr/lib/systemd/system/smb.service.
@@ -99,12 +99,14 @@ There are several possibilities to login onto these fresh created VMs:
  - Or, via the console of your hypervisor
 
 The passwords for the _vagrant_ and _root_ user are the same: *vagrant*
+As _vagrant_ user you can easily become _root_ via *sudo su* (the rules are pre-configured).
 
 Now, you are ready to attend the workshop without losing time to set it up from scratch.
+The lab exercises are *not yet* uploaded as otherwise nobody would attend the workshop - makes sense, no?
 
 ## Halting the VMs
 
-is quite simple: *vagrant halt* (see also *vagrant -h* for more options)
+Is quite simple: *vagrant halt* (see also *vagrant -h* for more options)
 
 
 # Encountered a problem with setting up the workshop
@@ -141,4 +143,6 @@ Then go check and follow the advise mentioned in issue https://github.com/mitche
 
 If you need to contact me for setting a workshop on your premises then see the possibilities at http://it3.be/rear-support/index.html
 
-Be aware, this workshop uses *centos/7* as GNU/Linux Operating system. If you want to have it for another version or type of Linux then you have to pay for it (consultancy fee - see above link).
+Be aware, this workshop uses *centos/7* as GNU/Linux Operating system. If you want to have it for another version or type of GNU/Linux then you have to pay for it (consultancy fee - see above link).
+
+Last updated: 19 August 2016
