@@ -12,9 +12,9 @@ I would really appreciate that you test your hypervisor of choice and contribute
 
 A few words before going to the prerequisites - we use **vagrant** as digital assitant to setup up our virtual images (VMs) to play with rear. Why? Because, in order to speed up the workshop around rear we do install lots of software automatically in the client and server VMs.
 
-Why use Vagrant to play with rear? Vagrant is a widely used amongst developers to create virtualized environments which can be used to stup test labs, to play around without the need to install from scratch a VM, and to screw it up completey without any impact on your host computer itself. Afterwards, the VMs cab be deleted and/or rebuild. all of this is possible by a single command: *vagrant*
+Why use Vagrant to play with rear? Vagrant is a widely used amongst developers to create virtualized environments which can be used to setup test labs, to play around without the need to install from scratch a VM, and to screw it up completey without any impact on your host computer itself. Afterwards, the VMs can be deleted and/or rebuild. All of this is possible by a single command: *vagrant*
 
-To give an example, when you have setup the _client_ and _server_ VMs by running *vagrant up* the _server_ VM contains a working Bareos backup environment, and the _client_ VM can simple make a full backup towards the _server_ VM without any additional steps or commands to execute. This is done in order to avoid any installation of configuration issues with Bareos. Especially, the workshop is around **the usage of rear** and not Bareos. We need to concentrate on the possibilities that rear offers. To avoid distractions of minor (or major) system administration tasks this is all done automatically via vagrant and its provisioning capabilities (via scripting). This might become food for another talk - how the hell did we achieve this?
+To give an example, when you have setup the _client_ and _server_ VMs by running *vagrant up* the _server_ VM contains a working Bareos backup environment, and the _client_ VM can simple make a full backup towards the _server_ VM without any additional steps or commands to execute. This is done in order to avoid any installation or configuration issues with Bareos. Especially, the workshop is around **the usage of rear** and not Bareos. We need to concentrate on the possibilities that rear offers. To avoid distractions of minor (or major) system administration tasks this is all done automatically via vagrant and its provisioning capabilities (via scripting). This might become food for another talk - how the hell did we achieve this?
 
 ## Prerequisites
 
@@ -152,4 +152,4 @@ If you need to contact me for setting a workshop on your premises then see the p
 
 Be aware, this workshop uses *centos/7* as GNU/Linux Operating system. If you want to have it for another version or type of GNU/Linux then you have to pay for it (consultancy fee - see above link).
 
-Last updated: 19 August 2016
+Last updated: 22 August 2016
