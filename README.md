@@ -10,13 +10,17 @@ This document was only tested for the KVM and VirtualBox hypervisors, but it sho
 
 I would really appreciate that you test your hypervisor of choice and contribute instructions back (at https://github.com/rear/rear-workshop-osbconf-2016/pulls).
 
+A few words before going to the prerequisites - we use **vagrant** as digital assitant to setup up our virtual images (VMs) to play with rear. Why? Because, in order to speed up the workshop around rear we do install lots of software automatically in the client and server VMs.
+
+It give an example, when you have steup the client/server VMs by running *vagrant up* the server VM contains a working bareos server environment, and the client VM can simple make a full backup towards to server VM without any (really), any additional steps to do. This is done in order to avoid confiration issues with Bareos. Especially, the workshop is around the usage of rear and not Bareos. We need to concentrate on the possibilities rear offers. To avoid distractions with minor (or major) system administartion tasks this is all done automatically via vagrant and its provisioning capabilities (via scripts). This might become another talk - how the hell did we achieve this...
+
 ## Prerequisites
 
 Before we can start you need several things:
 
  - Host system can be Linux, Mac, Windows
  - A hypervisor like KVM, VirtualBox, VMware Player or VMware Fusion, Parallels Desktop
- - Download and install *vagrant* from https://www.vagrantup.com/downloads.html
+ - Install *vagrant* from your distribution or when not present from https://www.vagrantup.com/downloads.html
  - KVM with libvirt needs the *vagrant-libvirt* plugin:  _vagrant plugin install vagrant-libvirt_
  - Install *git* to download the workshop: _git clone https://github.com/rear/rear-workshop-osbconf-2016.git_
  - Sufficient free disk space for 3 VMs (about 3G per virtual machine should do)
