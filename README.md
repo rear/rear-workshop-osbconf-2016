@@ -115,6 +115,11 @@ The lab exercises are *not yet* uploaded as otherwise nobody would attend the wo
 
 Is quite simple: *vagrant halt* (see also *vagrant -h* for more options)
 
+## Cleaning up the VMs
+
+When you are done with the labs you can simply destroy all the VMs by *vagrant destroy*
+
+And, the vagrant box can be removed as *vagrant box remove centos/7*
 
 # Encountered a problem with setting up the workshop
 
@@ -152,4 +157,4 @@ If you need to contact me for setting a workshop on your premises then see the p
 
 Be aware, this workshop uses *centos/7* as GNU/Linux Operating system. If you want to have it for another version or type of GNU/Linux then you have to pay for it (consultancy fee - see above link).
 
-Last updated: 22 August 2016
+Last updated: 09 September 2016
