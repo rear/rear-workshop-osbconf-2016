@@ -10,14 +10,18 @@ timedatectl set-timezone Europe/Brussels
 date
 
 
-# Add IP address to /etc/hosts
+# Add IP addresses to /etc/hosts
 IPclient="192.168.33.10"
 grep -q "^$IPclient" /etc/hosts
 if [[ $? -eq 1 ]] ;then
    echo "Add IP addresses of client and server to /etc/hosts file"
+   echo "# Private IP addresses are in the 192.168.33.0 network" >> /etc/hosts
    echo "192.168.33.10   client.box client vagrant-client" >> /etc/hosts
    echo "192.168.33.15   server.box server vagrant-server" >> /etc/hosts
-   echo "192.168.33.1    vagrant-host" >> /etc/hosts
+   echo "192.168.33.1    vagrant-host vagrant-host-private" >> /etc/hosts
+   echo "# Oracle VirtualBox Public IP addresses are using network 10.0.2.0" >> /etc/hosts
+   echo "# With Oracle VirtualBox the public interface eth0 uses IP address 10.0.2.15" >> /etc/hosts
+   echo "10.0.2.2   	 vagrant-host-public" >> /etc/hosts
 fi
 
 
@@ -101,6 +105,7 @@ sed -i 's/Defaults\s*requiretty/Defaults !requiretty/' /etc/sudoers
 # SSH setup
 # Add Vagrant ssh key for root and vagrant accouts.
 sed -i 's/.*UseDNS.*/UseDNS no/' /etc/ssh/sshd_config
+sed -i 's/.*PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
 
 # setup SSH keys for user root
 [ -d ~root/.ssh ] || mkdir  -m 700 ~root/.ssh
@@ -151,11 +156,19 @@ fi
 echo "Current mode of SELinux is \"$(getenforce)\"" 
 echo "Give httpd rights to read from /srv/http/packages"
 chcon -R -t httpd_sys_content_t /srv/http/packages/
+# However, SELinux and Oracle VirtualBox are not close friends and give restore issues when enabled
+# Therefore, for the sake of the workshop we disable it
+echo "Force SELinux in Permissive mode"
+setenforce Permissive
 
 # Restart httpd so it knows about $RPMDIR location (/etc/httpd/conf.d/packages.conf)
 #service httpd restart
 /bin/systemctl restart  httpd.service
 /bin/systemctl enable   httpd.service
+
+# Disacle kdump service - fails anyway due to lack of swap
+/bin/systemctl stop kdump.service
+/bin/systemctl disbale kdump.service
 
 # add the domain name to the /etc/idmapd.conf file (for NFSv4)
 sed -i -e 's,^#Domain =.*,Domain = box,' /etc/idmapd.conf

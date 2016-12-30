@@ -7,7 +7,7 @@ Summary:	Rear configuration files
 
 Group:		Applications/File
 License:	GPLv3
-URL:		https://github.com/rear/rear-workshop-osbconf-2016
+URL:		https://github.com/rear/rear-workshop
 Source0:	https://build.opensuse.org/package/show/home:gdha/rear-workshop/rear-workshop.tar.gz
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-XXXXXX)
 

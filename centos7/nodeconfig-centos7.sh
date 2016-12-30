@@ -15,6 +15,12 @@ yum install -y bareos-filedaemon bareos-bconsole
 #yum install -y bareos-client-conf # fails see issue #1
 rpm -i --replacefiles $( ls /srv/http/packages/workshop/bareos-client-conf-*.rpm )
 
+# check if eth1 is UP
+# Why? See issue https://github.com/mitchellh/vagrant/issues/8115
+# Will probably be fixed in vagrant 1.9.2
+# Currently, when we start the vm (without provisioning) the eth1 is still DOWN
+ip addr show dev eth1 | grep -q DOWN && systemctl restart network.service
+
 echo "Enabling and Starting bareos-fd daemon process"
 systemctl enable bareos-fd.service
 systemctl start bareos-fd.service
@@ -33,6 +39,9 @@ echo "Running server only commands:"
 cat > /etc/exports <<EOF
 /export/nfs 192.168.0.0/16(rw,no_root_squash)
 EOF
+
+# check if eth1 is UP
+ip addr show dev eth1 | grep -q DOWN && systemctl restart network.service
 
 # start the NFS service
 systemctl start  nfs-idmapd rpcbind nfs-server

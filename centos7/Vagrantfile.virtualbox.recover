@@ -18,8 +18,9 @@ Vagrant.configure(2) do |config|
       nodeconfig.vm.network :private_network, ip: node[:ip]
 
       memory = node[:ram] ? node[:ram] : 256;
-      #nodeconfig.vm.provider :libvirt do |libvirt|
-      #end
+      nodeconfig.vm.provider :virtualbox do |vb|
+        #
+      end
      
       nodeconfig.vm.synced_folder ".", "/home/vagrant/sync", disabled: true
       nodeconfig.vm.provision :shell, path: "provision-centos7.sh"
@@ -34,21 +35,29 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "recover", autostart: false do |recover|
+    recover.vm.box = "clink15/pxe"
+    recover.vm.boot_timeout = 3600
+    recover.ssh.insert_key = "false"
+
+    #recover.vm.network "public_network"
     recover.vm.network :private_network, ip: "192.168.33.5"
     recover.ssh.username = "root"
 
-    recover.vm.provider :libvirt do |recover_prov|
-      recover_prov.gui = true
+    recover.vm.provider :virtualbox do |recover_prov|
+      recover_prov.name = "recover"
+      recover_prov.gui = true unless ENV['NO_GUI']
+      recover_prov.memory = "1024"
+      recover_prov.cpus = "1"
+      
       # https://docs.vagrantup.com/v2/virtualbox/configuration.html
       # http://superuser.com/questions/741734/virtualbox-how-can-i-add-mount-an-iso-image-file-from-command-line
-      # make sure file "/exports/isos/client/rear-client.iso" is readable by others
-      recover_prov.customize ["storageattach", :id, "--storagectl", "IDE Controller",
+      # make sure file "/export/isos/client/rear-client.iso" is readable by others
+      # According URL https://github.com/mitchellh/vagrant/issues/8105 "IDE Controller" might be "IDE" only
+      recover_prov.customize ["storageattach", :id, "--storagectl", "IDE",
                               "--port", "0", "--device", "1", "--type", "dvddrive",
-                              "--medium", "/exports/isos/client/rear-client.iso"]
+                              "--medium", "/export/isos/client/rear-client.iso"]
       recover_prov.customize ["modifyvm", :id, "--boot1", "DVD", "--boot2", "disk",
                               "--boot3", "none", "--boot4", "none"]
-      # recover_prov.memory = 1024
-      # recover_prov.cpus = 2
       # end of |recover_prov|
       end
     # end of |recover| 
